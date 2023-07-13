@@ -6,7 +6,9 @@
   "scripts": {
     "start": "npm run build && npm run encrypt",
     "build": "node build.js",
-    "encrypt": "staticrypt output/output.html --directory='output' --password='altruism and safety' --template-title='Good Ancestors Policy' --template-button='Okay' --template-color-primary='#253551' --template-color-secondary='#E0E0DB' --template-error='Incorrect password'",
+    "watch": "node --watch build.js",
+    "share": "staticrypt --share --password='altruism and safety'",
+    "encrypt": "staticrypt output/pick-n-mix.html --directory='output' --password='altruism and safety' --template-title='Good Ancestors Policy' --template-button='Okay' --template-color-primary='#253551' --template-color-secondary='#E0E0DB' --template-error='Incorrect password'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,7 +22,11 @@
   },
   "homepage": "https://github.com/good-ancestors/spicy-docs#readme",
   "dependencies": {
+    "adm-zip": "^0.5.10",
+    "axios": "^1.4.0",
     "cheerio": "^1.0.0-rc.12",
+    "googleapis": "^122.0.0",
+    "nodemon": "^3.0.1",
     "staticrypt": "^3.3.1"
   }
 }
