@@ -38,7 +38,7 @@ Object.entries(h1Headings).forEach((heading) => {
           contentIsUnderH2 = true;
           nextSibling.style.display = "block";
         }
-        if (!contentIsUnderH2) {
+        if (!contentIsUnderH2 && nextSibling.nodeName !== "SCRIPT") {
           nextSibling.style.display = "block";
         }
       }
@@ -65,7 +65,7 @@ Object.entries(h2Headings).forEach((heading) => {
           contentIsUnderH3 = true;
           nextSibling.style.display = "block";
         }
-        if (!contentIsUnderH3) {
+        if (!contentIsUnderH3 && nextSibling.nodeName !== "SCRIPT") {
           nextSibling.style.display = "block";
         }
       }
@@ -90,10 +90,39 @@ Object.entries(h3Headings).forEach((heading) => {
         nextSibling.style.display = "none";
       } else {
         if (nextSibling.nodeName === "H4") {
-          // contentIsUnderH4 = true; // since we're not making H4 headings clickable
+          contentIsUnderH4 = true;
           nextSibling.style.display = "block";
         }
-        if (!contentIsUnderH4) {
+        if (!contentIsUnderH4 && nextSibling.nodeName !== "SCRIPT") {
+          nextSibling.style.display = "block";
+        }
+      }
+      nextSibling = nextSibling.nextElementSibling;
+    }
+  });
+});
+
+// Make H4 headings clickable
+Object.entries(h4Headings).forEach((heading) => {
+  heading[1].addEventListener("click", () => {
+    let nextSibling = document.getElementById(heading[1].id).nextElementSibling;
+    let contentIsUnderH5 = false;
+    let expanded = nextSibling.style.display === "block";
+    while (
+      nextSibling &&
+      nextSibling.nodeName !== "H1" &&
+      nextSibling.nodeName !== "H2" &&
+      nextSibling.nodeName !== "H3" &&
+      nextSibling.nodeName !== "H4"
+    ) {
+      if (expanded) {
+        nextSibling.style.display = "none";
+      } else {
+        if (nextSibling.nodeName === "H5") {
+          // contentIsUnderH5 = true; // since we're not making H5 headings clickable
+          nextSibling.style.display = "block";
+        }
+        if (!contentIsUnderH5 && nextSibling.nodeName !== "SCRIPT") {
           nextSibling.style.display = "block";
         }
       }
@@ -120,11 +149,17 @@ body.doc-content {
   overflow-x: scroll;
   margin-bottom: 16px;
   margin-top: 16px;
+
+}
+
+table {
+  width: 90%;
 }
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   background-color: #eee;
   cursor: pointer;
   border-radius: 8px;
@@ -133,7 +168,8 @@ h3 {
 
 h1:hover,
 h2:hover,
-h3:hover {
+h3:hover,
+h4:hover {
   background-color: #ddd;
 }
 `;
