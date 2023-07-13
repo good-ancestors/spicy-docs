@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run build && npm run encrypt",
     "build": "node build.js",
-    "watch": "node --watch build.js",
+    "watch": "node --watch-path=./src build.js",
     "share": "staticrypt --share --password='altruism and safety'",
     "encrypt": "staticrypt output/pick-n-mix.html --directory='output' --password='altruism and safety' --template-title='Good Ancestors Policy' --template-button='Okay' --template-color-primary='#253551' --template-color-secondary='#E0E0DB' --template-error='Incorrect password'",
     "test": "echo \"Error: no test specified\" && exit 1"

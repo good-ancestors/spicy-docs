@@ -1,9 +1,9 @@
 
 const cheerio = require('cheerio');
 const fs = require('fs');
-const spice = fs.readFileSync('spice.js').toString()
-const pickNMix = cheerio.load(fs.readFileSync('input.html'));
-const buildUI = cheerio.load(fs.readFileSync('build-ui.html'));
+const spice = fs.readFileSync('src/spice.js').toString()
+const pickNMix = cheerio.load(fs.readFileSync('src/input.html'));
+const buildUI = cheerio.load(fs.readFileSync('src/build-ui.html'));
 
 pickNMix('body').append('<script>'+ spice +'</script>');
 buildUI('body').append('<template id="spice">' + btoa(spice) +'</script>');

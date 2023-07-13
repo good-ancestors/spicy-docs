@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spicy Docs</title>
+  <style>
+    html {
+      font-family: sans-serif;
+    }
+    section {
+      max-width: 480px;
+      margin: 32px auto;
+      padding: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <section>
+    <h1>Step 1</h1>
+    <p>Enter the document ID and then click download below.</p>
+    <input type="text" id="docId" placeholder="1dIbbLA3wop7-hBSGVYk11nKqdL-hEO-KrqTeBrx4XXo">
+    <button onclick="download()">Download</button>
+    <br>
+    <br>
+    <br>
+    <h1>Step 2</h1>
+    <p>Upload this downloaded Pick n Mix HTML file here:</p>
+    <input type="file" id="htmlFile" accept=".html">
+    <br>
+    <br>
+    <br>
+    <h1>Step 3</h1>
+    <p>
+      Click "Spice-ify" below to pepper in the extra functionality and
+      download the document
+    </p>
+    <button onclick="spicify()">Spice-ify</button>
+    <br>
+    <br>
+    <br>
+    <h1>Step 4</h1>
+    <p>Open the downloaded document.</p>
+  </section>
+  <script>
+    function download() {
+      const docId = document.getElementById("docId").value;
+      const a = document.createElement("a");
+      a.download = "document.html";
+      a.href = `https://docs.google.com/document/d/${docId}/export?format=html`;
+      a.click();
+    }
+
+    async function spicify() {
+      const fileInput = document.getElementById("htmlFile");
+      const file = fileInput.files[0];
+      const spice = document.getElementById("spice");
+      const spiceScript = document.createElement("script");
+      spiceScript.innerHTML = atob(spice.innerHTML);
+      if (file) {
+        try {
+          const fileContent = await file.text();
+          let doc = new DOMParser().parseFromString(fileContent, "text/html");
+          doc.body.appendChild(spiceScript);
+          const blob = new Blob([doc.documentElement.outerHTML], {
+            type: "text/html;charset=utf-8",
+          });
+          const a = document.createElement("a");
+          a.download = "document.html";
+          a.href = URL.createObjectURL(blob);
+          a.click();
+        } catch (err) {
+          console.error("Error reading file:", err);
+        }
+      } else {
+        console.log("No file selected");
+      }
+    }
+  </script>
+</body>
+</html>
