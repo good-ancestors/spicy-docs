@@ -1,7 +1,16 @@
 # spicy-docs
 Pepper in useful interactivity to Google Doc HTML exports.
 
-## How it works
+## Requirements
+- Node.js v18.0.0 or higher
+
+## Development
+1. Export a Google Doc as HTML
+2. Rename the Google Doc `input.html` and place it at the root of this directory
+3. Run `npm run watch` to inject `spice.js` into the page every time you save
+4. Open the output file `output/output.html` in your browser
+
+## Production
 1. Export a Google Doc as HTML
 2. Rename the Google Doc `input.html` and place it at the root of this directory
 3. Run `npm run build` to inject `spice.js` into the page
