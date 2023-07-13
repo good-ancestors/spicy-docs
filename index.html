@@ -1,73 +1,89 @@
 <!DOCTYPE html><html lang="en"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-      html {
-        font-family: sans-serif;
-      }
-      section {
-        max-width: 480px;
-        margin: 32px auto;
-        padding: 16px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-      }
-    </style>
-  </head>
-  <body>
-    <section>
-      <h1>Step 1</h1>
-      <p>Download the Pick n Mix from here:</p>
-      <a href="https://docs.google.com/document/d/1CIbbLA3wop7-hBSGVYk11nKqdL-hEO-KrqTeBrx4XXo/export?format=html">https://docs.google.com/document/d/1CIbbLA3wop7-hBSGVYk11nKqdL-hEO-KrqTeBrx4XXo/export?format=html</a>
-      <br>
-      <br>
-      <br>
-      <h1>Step 2</h1>
-      <p>Upload this downloaded Pick n Mix HTML file here:</p>
-      <input type="file" id="htmlFile" accept=".html">
-      <br>
-      <br>
-      <br>
-      <h1>Step 3</h1>
-      <p>
-        Click "Spice-ify" below to pepper in the extra functionality and
-        download the document
-      </p>
-      <button onclick="spicify()">Spice-ify</button>
-      <br>
-      <br>
-      <br>
-      <h1>Step 4</h1>
-      <p>Open the downloaded document.</p>
-    </section>
-    <script>
-      async function spicify() {
-        const fileInput = document.getElementById("htmlFile");
-        const file = fileInput.files[0];
-        const spice = document.getElementById("spice");
-        const spiceScript = document.createElement("script");
-        spiceScript.innerHTML = atob(spice.innerHTML);
-        if (file) {
-          try {
-            const fileContent = await file.text();
-            let doc = new DOMParser().parseFromString(fileContent, "text/html");
-            doc.body.appendChild(spiceScript);
-            const blob = new Blob([doc.documentElement.outerHTML], {
-              type: "text/html;charset=utf-8",
-            });
-            const a = document.createElement("a");
-            a.download = "document.html";
-            a.href = URL.createObjectURL(blob);
-            a.click();
-          } catch (err) {
-            console.error("Error reading file:", err);
-          }
-        } else {
-          console.log("No file selected");
-        }
-      }
-    </script>
-  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spicy Docs</title>
+  <style>
+    html {
+      font-family: sans-serif;
+    }
+    section {
+      max-width: 480px;
+      margin: 32px auto;
+      padding: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin: 0 0 1rem;
+    }
+  </style>
+</head>
+<body>
+  <section>
+    <h1>Step 1</h1>
+    <p>Enter the ID of the Google Doc and click download.</p>
+    <input type="text" id="docId" placeholder="e.g. 1dIbbLA3wop7-hBSGVYk11nKqdL-hEO-KrqTeBrx4XXo">
+    <button onclick="download()">Download</button>
+    <br>
+    <br>
+    <br>
+    <h1>Step 2</h1>
+    <p>Upload this downloaded HTML file here:</p>
+    <input type="file" id="htmlFile" accept=".html">
+    <br>
+    <br>
+    <br>
+    <h1>Step 3</h1>
+    <p>
+      Click "Spice-ify" below to pepper in the extra functionality and
+      download the document.
+    </p>
+    <button onclick="spicify()">Spice-ify</button>
+    <br>
+    <br>
+    <br>
+    <h1>Step 4</h1>
+    <p>Open the downloaded document.</p>
+  </section>
+  <script>
+    function download() {
+      const docId = document.getElementById("docId").value;
+      const a = document.createElement("a");
+      a.download = "document.html";
+      a.href = `https://docs.google.com/document/d/${docId}/export?format=html`;
+      a.click();
+    }
 
-<template id="spice">bGV0IGgxSGVhZGluZ3MgPSBkb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgiaDEiKTsKbGV0IGgySGVhZGluZ3MgPSBkb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgiaDIiKTsKbGV0IGgzSGVhZGluZ3MgPSBkb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgiaDMiKTsKbGV0IGg0SGVhZGluZ3MgPSBkb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgiaDQiKTsKbGV0IGg1SGVhZGluZ3MgPSBkb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgiaDUiKTsKbGV0IGg2SGVhZGluZ3MgPSBkb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgiaDYiKTsKbGV0IHRhYmxlcyA9IGRvY3VtZW50LmdldEVsZW1lbnRzQnlUYWdOYW1lKCJ0YWJsZSIpOwoKT2JqZWN0LmVudHJpZXModGFibGVzKS5mb3JFYWNoKCh0YWJsZSkgPT4gewogIGNvbnNvbGUubG9nKHRhYmxlWzFdLnBhcmVudE5vZGUpOwogIGxldCBkaXYgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCJkaXYiKTsKICBkaXYuY2xhc3NMaXN0LmFkZCgiZnVsbC13aWR0aCIpOwogIHRhYmxlWzFdLnBhcmVudE5vZGUuaW5zZXJ0QmVmb3JlKGRpdiwgdGFibGVbMV0pOwogIGRpdi5hcHBlbmRDaGlsZCh0YWJsZVsxXSk7Cn0pOwoKLy8gSGlkZSBhbGwgY29udGVudCBiZWxvdyBIMSBoZWFkaW5ncwpPYmplY3QuZW50cmllcyhoMUhlYWRpbmdzKS5mb3JFYWNoKChoZWFkaW5nKSA9PiB7CiAgbGV0IG5leHRTaWJsaW5nID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoaGVhZGluZ1sxXS5pZCkubmV4dEVsZW1lbnRTaWJsaW5nOwogIGNvbnNvbGUubG9nKG5leHRTaWJsaW5nKTsKICB3aGlsZSAobmV4dFNpYmxpbmcgJiYgbmV4dFNpYmxpbmcubm9kZU5hbWUgIT09ICJIMSIpIHsKICAgIG5leHRTaWJsaW5nLnN0eWxlLmRpc3BsYXkgPSAibm9uZSI7CiAgICBuZXh0U2libGluZyA9IG5leHRTaWJsaW5nLm5leHRFbGVtZW50U2libGluZzsKICB9Cn0pOwoKLy8gTWFrZSBIMSBoZWFkaW5ncyBjbGlja2FibGUKT2JqZWN0LmVudHJpZXMoaDFIZWFkaW5ncykuZm9yRWFjaCgoaGVhZGluZykgPT4gewogIGhlYWRpbmdbMV0uYWRkRXZlbnRMaXN0ZW5lcigiY2xpY2siLCAoKSA9PiB7CiAgICBsZXQgbmV4dFNpYmxpbmcgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChoZWFkaW5nWzFdLmlkKS5uZXh0RWxlbWVudFNpYmxpbmc7CiAgICBsZXQgZXhwYW5kZWQgPSBuZXh0U2libGluZy5zdHlsZS5kaXNwbGF5ID09PSAiYmxvY2siOwogICAgbGV0IGNvbnRlbnRJc1VuZGVySDIgPSBmYWxzZTsKICAgIHdoaWxlIChuZXh0U2libGluZyAmJiBuZXh0U2libGluZy5ub2RlTmFtZSAhPT0gIkgxIikgewogICAgICBpZiAoZXhwYW5kZWQpIHsKICAgICAgICBuZXh0U2libGluZy5zdHlsZS5kaXNwbGF5ID0gIm5vbmUiOwogICAgICB9IGVsc2UgewogICAgICAgIGlmIChuZXh0U2libGluZy5ub2RlTmFtZSA9PT0gIkgyIikgewogICAgICAgICAgY29udGVudElzVW5kZXJIMiA9IHRydWU7CiAgICAgICAgICBuZXh0U2libGluZy5zdHlsZS5kaXNwbGF5ID0gImJsb2NrIjsKICAgICAgICB9CiAgICAgICAgaWYgKCFjb250ZW50SXNVbmRlckgyKSB7CiAgICAgICAgICBuZXh0U2libGluZy5zdHlsZS5kaXNwbGF5ID0gImJsb2NrIjsKICAgICAgICB9CiAgICAgIH0KICAgICAgbmV4dFNpYmxpbmcgPSBuZXh0U2libGluZy5uZXh0RWxlbWVudFNpYmxpbmc7CiAgICB9CiAgfSk7Cn0pOwoKLy8gTWFrZSBIMiBoZWFkaW5ncyBjbGlja2FibGUKT2JqZWN0LmVudHJpZXMoaDJIZWFkaW5ncykuZm9yRWFjaCgoaGVhZGluZykgPT4gewogIGhlYWRpbmdbMV0uYWRkRXZlbnRMaXN0ZW5lcigiY2xpY2siLCAoKSA9PiB7CiAgICBsZXQgbmV4dFNpYmxpbmcgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChoZWFkaW5nWzFdLmlkKS5uZXh0RWxlbWVudFNpYmxpbmc7CiAgICBsZXQgY29udGVudElzVW5kZXJIMyA9IGZhbHNlOwogICAgbGV0IGV4cGFuZGVkID0gbmV4dFNpYmxpbmcuc3R5bGUuZGlzcGxheSA9PT0gImJsb2NrIjsKICAgIHdoaWxlICgKICAgICAgbmV4dFNpYmxpbmcgJiYKICAgICAgbmV4dFNpYmxpbmcubm9kZU5hbWUgIT09ICJIMSIgJiYKICAgICAgbmV4dFNpYmxpbmcubm9kZU5hbWUgIT09ICJIMiIKICAgICkgewogICAgICBpZiAoZXhwYW5kZWQpIHsKICAgICAgICBuZXh0U2libGluZy5zdHlsZS5kaXNwbGF5ID0gIm5vbmUiOwogICAgICB9IGVsc2UgewogICAgICAgIGlmIChuZXh0U2libGluZy5ub2RlTmFtZSA9PT0gIkgzIikgewogICAgICAgICAgY29udGVudElzVW5kZXJIMyA9IHRydWU7CiAgICAgICAgICBuZXh0U2libGluZy5zdHlsZS5kaXNwbGF5ID0gImJsb2NrIjsKICAgICAgICB9CiAgICAgICAgaWYgKCFjb250ZW50SXNVbmRlckgzKSB7CiAgICAgICAgICBuZXh0U2libGluZy5zdHlsZS5kaXNwbGF5ID0gImJsb2NrIjsKICAgICAgICB9CiAgICAgIH0KICAgICAgbmV4dFNpYmxpbmcgPSBuZXh0U2libGluZy5uZXh0RWxlbWVudFNpYmxpbmc7CiAgICB9CiAgfSk7Cn0pOwoKLy8gTWFrZSBIMyBoZWFkaW5ncyBjbGlja2FibGUKT2JqZWN0LmVudHJpZXMoaDNIZWFkaW5ncykuZm9yRWFjaCgoaGVhZGluZykgPT4gewogIGhlYWRpbmdbMV0uYWRkRXZlbnRMaXN0ZW5lcigiY2xpY2siLCAoKSA9PiB7CiAgICBsZXQgbmV4dFNpYmxpbmcgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChoZWFkaW5nWzFdLmlkKS5uZXh0RWxlbWVudFNpYmxpbmc7CiAgICBsZXQgY29udGVudElzVW5kZXJINCA9IGZhbHNlOwogICAgbGV0IGV4cGFuZGVkID0gbmV4dFNpYmxpbmcuc3R5bGUuZGlzcGxheSA9PT0gImJsb2NrIjsKICAgIHdoaWxlICgKICAgICAgbmV4dFNpYmxpbmcgJiYKICAgICAgbmV4dFNpYmxpbmcubm9kZU5hbWUgIT09ICJIMSIgJiYKICAgICAgbmV4dFNpYmxpbmcubm9kZU5hbWUgIT09ICJIMiIgJiYKICAgICAgbmV4dFNpYmxpbmcubm9kZU5hbWUgIT09ICJIMyIKICAgICkgewogICAgICBpZiAoZXhwYW5kZWQpIHsKICAgICAgICBuZXh0U2libGluZy5zdHlsZS5kaXNwbGF5ID0gIm5vbmUiOwogICAgICB9IGVsc2UgewogICAgICAgIGlmIChuZXh0U2libGluZy5ub2RlTmFtZSA9PT0gIkg0IikgewogICAgICAgICAgLy8gY29udGVudElzVW5kZXJINCA9IHRydWU7IC8vIHNpbmNlIHdlJ3JlIG5vdCBtYWtpbmcgSDQgaGVhZGluZ3MgY2xpY2thYmxlCiAgICAgICAgICBuZXh0U2libGluZy5zdHlsZS5kaXNwbGF5ID0gImJsb2NrIjsKICAgICAgICB9CiAgICAgICAgaWYgKCFjb250ZW50SXNVbmRlckg0KSB7CiAgICAgICAgICBuZXh0U2libGluZy5zdHlsZS5kaXNwbGF5ID0gImJsb2NrIjsKICAgICAgICB9CiAgICAgIH0KICAgICAgbmV4dFNpYmxpbmcgPSBuZXh0U2libGluZy5uZXh0RWxlbWVudFNpYmxpbmc7CiAgICB9CiAgfSk7Cn0pOwoKbGV0IHN0eWxlID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgic3R5bGUiKTsKc3R5bGUuaW5uZXJIVE1MID0gYApib2R5LmRvYy1jb250ZW50IHsKICBwYWRkaW5nOiAxNnB4IDhweDsKICBtYXJnaW46IDAgYXV0bzsKICBtYXgtd2lkdGg6IDcyMHB4Owp9CgouZnVsbC13aWR0aCB7CiAgd2lkdGg6IDEwMHZ3OwogIHBvc2l0aW9uOiByZWxhdGl2ZTsKICBsZWZ0OiA1MCU7CiAgcmlnaHQ6IDUwJTsKICBtYXJnaW4tbGVmdDogLTUwdnc7CiAgbWFyZ2luLXJpZ2h0OiAtNTB2dzsKICBvdmVyZmxvdy14OiBzY3JvbGw7CiAgbWFyZ2luLWJvdHRvbTogMTZweDsKICBtYXJnaW4tdG9wOiAxNnB4Owp9CgpoMSwKaDIsCmgzIHsKICBiYWNrZ3JvdW5kLWNvbG9yOiAjZWVlOwogIGN1cnNvcjogcG9pbnRlcjsKICBib3JkZXItcmFkaXVzOiA4cHg7CiAgcGFkZGluZzogOHB4ICFpbXBvcnRhbnQ7Cn0KCmgxOmhvdmVyLApoMjpob3ZlciwKaDM6aG92ZXIgewogIGJhY2tncm91bmQtY29sb3I6ICNkZGQ7Cn0KYDsKZG9jdW1lbnQuaGVhZC5hcHBlbmRDaGlsZChzdHlsZSk7CgpsZXQgbWV0YVRhZyA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoIm1ldGEiKTsKbWV0YVRhZy5zZXRBdHRyaWJ1dGUoIm5hbWUiLCAidmlld3BvcnQiKTsKbWV0YVRhZy5zZXRBdHRyaWJ1dGUoImNvbnRlbnQiLCAid2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEuMCIpOwpkb2N1bWVudC5oZWFkLmFwcGVuZENoaWxkKG1ldGFUYWcpOwo=</template></body></html>
+    async function spicify() {
+      const fileInput = document.getElementById("htmlFile");
+      const file = fileInput.files[0];
+      const spice = document.getElementById("spice");
+      const spiceScript = document.createElement("script");
+      spiceScript.innerHTML = atob(spice.innerHTML);
+      if (file) {
+        try {
+          const fileContent = await file.text();
+          let doc = new DOMParser().parseFromString(fileContent, "text/html");
+          doc.body.appendChild(spiceScript);
+          const blob = new Blob([doc.documentElement.outerHTML], {
+            type: "text/html;charset=utf-8",
+          });
+          const a = document.createElement("a");
+          a.download = "document.html";
+          a.href = URL.createObjectURL(blob);
+          a.click();
+        } catch (err) {
+          console.error("Error reading file:", err);
+        }
+      } else {
+        console.log("No file selected");
+      }
+    }
+  </script>
+
+<template id="spice">bGV0IGgxSGVhZGluZ3MgPSBkb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgiaDEiKTsKbGV0IGgySGVhZGluZ3MgPSBkb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgiaDIiKTsKbGV0IGgzSGVhZGluZ3MgPSBkb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgiaDMiKTsKbGV0IGg0SGVhZGluZ3MgPSBkb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgiaDQiKTsKbGV0IGg1SGVhZGluZ3MgPSBkb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgiaDUiKTsKbGV0IGg2SGVhZGluZ3MgPSBkb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgiaDYiKTsKbGV0IHRhYmxlcyA9IGRvY3VtZW50LmdldEVsZW1lbnRzQnlUYWdOYW1lKCJ0YWJsZSIpOwoKT2JqZWN0LmVudHJpZXModGFibGVzKS5mb3JFYWNoKCh0YWJsZSkgPT4gewogIGNvbnNvbGUubG9nKHRhYmxlWzFdLnBhcmVudE5vZGUpOwogIGxldCBkaXYgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCJkaXYiKTsKICBkaXYuY2xhc3NMaXN0LmFkZCgiZnVsbC13aWR0aCIpOwogIHRhYmxlWzFdLnBhcmVudE5vZGUuaW5zZXJ0QmVmb3JlKGRpdiwgdGFibGVbMV0pOwogIGRpdi5hcHBlbmRDaGlsZCh0YWJsZVsxXSk7Cn0pOwoKLy8gSGlkZSBhbGwgY29udGVudCBiZWxvdyBIMSBoZWFkaW5ncwpPYmplY3QuZW50cmllcyhoMUhlYWRpbmdzKS5mb3JFYWNoKChoZWFkaW5nKSA9PiB7CiAgbGV0IG5leHRTaWJsaW5nID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoaGVhZGluZ1sxXS5pZCkubmV4dEVsZW1lbnRTaWJsaW5nOwogIGNvbnNvbGUubG9nKG5leHRTaWJsaW5nKTsKICB3aGlsZSAobmV4dFNpYmxpbmcgJiYgbmV4dFNpYmxpbmcubm9kZU5hbWUgIT09ICJIMSIpIHsKICAgIG5leHRTaWJsaW5nLnN0eWxlLmRpc3BsYXkgPSAibm9uZSI7CiAgICBuZXh0U2libGluZyA9IG5leHRTaWJsaW5nLm5leHRFbGVtZW50U2libGluZzsKICB9Cn0pOwoKLy8gTWFrZSBIMSBoZWFkaW5ncyBjbGlja2FibGUKT2JqZWN0LmVudHJpZXMoaDFIZWFkaW5ncykuZm9yRWFjaCgoaGVhZGluZykgPT4gewogIGhlYWRpbmdbMV0uYWRkRXZlbnRMaXN0ZW5lcigiY2xpY2siLCAoKSA9PiB7CiAgICBsZXQgbmV4dFNpYmxpbmcgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChoZWFkaW5nWzFdLmlkKS5uZXh0RWxlbWVudFNpYmxpbmc7CiAgICBsZXQgZXhwYW5kZWQgPSBuZXh0U2libGluZy5zdHlsZS5kaXNwbGF5ID09PSAiYmxvY2siOwogICAgbGV0IGNvbnRlbnRJc1VuZGVySDIgPSBmYWxzZTsKICAgIHdoaWxlIChuZXh0U2libGluZyAmJiBuZXh0U2libGluZy5ub2RlTmFtZSAhPT0gIkgxIikgewogICAgICBpZiAoZXhwYW5kZWQpIHsKICAgICAgICBuZXh0U2libGluZy5zdHlsZS5kaXNwbGF5ID0gIm5vbmUiOwogICAgICB9IGVsc2UgewogICAgICAgIGlmIChuZXh0U2libGluZy5ub2RlTmFtZSA9PT0gIkgyIikgewogICAgICAgICAgY29udGVudElzVW5kZXJIMiA9IHRydWU7CiAgICAgICAgICBuZXh0U2libGluZy5zdHlsZS5kaXNwbGF5ID0gImJsb2NrIjsKICAgICAgICB9CiAgICAgICAgaWYgKCFjb250ZW50SXNVbmRlckgyKSB7CiAgICAgICAgICBuZXh0U2libGluZy5zdHlsZS5kaXNwbGF5ID0gImJsb2NrIjsKICAgICAgICB9CiAgICAgIH0KICAgICAgbmV4dFNpYmxpbmcgPSBuZXh0U2libGluZy5uZXh0RWxlbWVudFNpYmxpbmc7CiAgICB9CiAgfSk7Cn0pOwoKLy8gTWFrZSBIMiBoZWFkaW5ncyBjbGlja2FibGUKT2JqZWN0LmVudHJpZXMoaDJIZWFkaW5ncykuZm9yRWFjaCgoaGVhZGluZykgPT4gewogIGhlYWRpbmdbMV0uYWRkRXZlbnRMaXN0ZW5lcigiY2xpY2siLCAoKSA9PiB7CiAgICBsZXQgbmV4dFNpYmxpbmcgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChoZWFkaW5nWzFdLmlkKS5uZXh0RWxlbWVudFNpYmxpbmc7CiAgICBsZXQgY29udGVudElzVW5kZXJIMyA9IGZhbHNlOwogICAgbGV0IGV4cGFuZGVkID0gbmV4dFNpYmxpbmcuc3R5bGUuZGlzcGxheSA9PT0gImJsb2NrIjsKICAgIHdoaWxlICgKICAgICAgbmV4dFNpYmxpbmcgJiYKICAgICAgbmV4dFNpYmxpbmcubm9kZU5hbWUgIT09ICJIMSIgJiYKICAgICAgbmV4dFNpYmxpbmcubm9kZU5hbWUgIT09ICJIMiIKICAgICkgewogICAgICBpZiAoZXhwYW5kZWQpIHsKICAgICAgICBuZXh0U2libGluZy5zdHlsZS5kaXNwbGF5ID0gIm5vbmUiOwogICAgICB9IGVsc2UgewogICAgICAgIGlmIChuZXh0U2libGluZy5ub2RlTmFtZSA9PT0gIkgzIikgewogICAgICAgICAgY29udGVudElzVW5kZXJIMyA9IHRydWU7CiAgICAgICAgICBuZXh0U2libGluZy5zdHlsZS5kaXNwbGF5ID0gImJsb2NrIjsKICAgICAgICB9CiAgICAgICAgaWYgKCFjb250ZW50SXNVbmRlckgzKSB7CiAgICAgICAgICBuZXh0U2libGluZy5zdHlsZS5kaXNwbGF5ID0gImJsb2NrIjsKICAgICAgICB9CiAgICAgIH0KICAgICAgbmV4dFNpYmxpbmcgPSBuZXh0U2libGluZy5uZXh0RWxlbWVudFNpYmxpbmc7CiAgICB9CiAgfSk7Cn0pOwoKLy8gTWFrZSBIMyBoZWFkaW5ncyBjbGlja2FibGUKT2JqZWN0LmVudHJpZXMoaDNIZWFkaW5ncykuZm9yRWFjaCgoaGVhZGluZykgPT4gewogIGhlYWRpbmdbMV0uYWRkRXZlbnRMaXN0ZW5lcigiY2xpY2siLCAoKSA9PiB7CiAgICBsZXQgbmV4dFNpYmxpbmcgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChoZWFkaW5nWzFdLmlkKS5uZXh0RWxlbWVudFNpYmxpbmc7CiAgICBsZXQgY29udGVudElzVW5kZXJINCA9IGZhbHNlOwogICAgbGV0IGV4cGFuZGVkID0gbmV4dFNpYmxpbmcuc3R5bGUuZGlzcGxheSA9PT0gImJsb2NrIjsKICAgIHdoaWxlICgKICAgICAgbmV4dFNpYmxpbmcgJiYKICAgICAgbmV4dFNpYmxpbmcubm9kZU5hbWUgIT09ICJIMSIgJiYKICAgICAgbmV4dFNpYmxpbmcubm9kZU5hbWUgIT09ICJIMiIgJiYKICAgICAgbmV4dFNpYmxpbmcubm9kZU5hbWUgIT09ICJIMyIKICAgICkgewogICAgICBpZiAoZXhwYW5kZWQpIHsKICAgICAgICBuZXh0U2libGluZy5zdHlsZS5kaXNwbGF5ID0gIm5vbmUiOwogICAgICB9IGVsc2UgewogICAgICAgIGlmIChuZXh0U2libGluZy5ub2RlTmFtZSA9PT0gIkg0IikgewogICAgICAgICAgLy8gY29udGVudElzVW5kZXJINCA9IHRydWU7IC8vIHNpbmNlIHdlJ3JlIG5vdCBtYWtpbmcgSDQgaGVhZGluZ3MgY2xpY2thYmxlCiAgICAgICAgICBuZXh0U2libGluZy5zdHlsZS5kaXNwbGF5ID0gImJsb2NrIjsKICAgICAgICB9CiAgICAgICAgaWYgKCFjb250ZW50SXNVbmRlckg0KSB7CiAgICAgICAgICBuZXh0U2libGluZy5zdHlsZS5kaXNwbGF5ID0gImJsb2NrIjsKICAgICAgICB9CiAgICAgIH0KICAgICAgbmV4dFNpYmxpbmcgPSBuZXh0U2libGluZy5uZXh0RWxlbWVudFNpYmxpbmc7CiAgICB9CiAgfSk7Cn0pOwoKbGV0IHN0eWxlID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgic3R5bGUiKTsKc3R5bGUuaW5uZXJIVE1MID0gYApib2R5LmRvYy1jb250ZW50IHsKICBwYWRkaW5nOiAxNnB4IDhweDsKICBtYXJnaW46IDAgYXV0bzsKICBtYXgtd2lkdGg6IDcyMHB4Owp9CgouZnVsbC13aWR0aCB7CiAgd2lkdGg6IDEwMHZ3OwogIHBvc2l0aW9uOiByZWxhdGl2ZTsKICBsZWZ0OiA1MCU7CiAgcmlnaHQ6IDUwJTsKICBtYXJnaW4tbGVmdDogLTUwdnc7CiAgbWFyZ2luLXJpZ2h0OiAtNTB2dzsKICBvdmVyZmxvdy14OiBzY3JvbGw7CiAgbWFyZ2luLWJvdHRvbTogMTZweDsKICBtYXJnaW4tdG9wOiAxNnB4Owp9CgpoMSwKaDIsCmgzIHsKICBiYWNrZ3JvdW5kLWNvbG9yOiAjZWVlOwogIGN1cnNvcjogcG9pbnRlcjsKICBib3JkZXItcmFkaXVzOiA4cHg7CiAgcGFkZGluZzogOHB4ICFpbXBvcnRhbnQ7Cn0KCmgxOmhvdmVyLApoMjpob3ZlciwKaDM6aG92ZXIgewogIGJhY2tncm91bmQtY29sb3I6ICNkZGQ7Cn0KYDsKZG9jdW1lbnQuaGVhZC5hcHBlbmRDaGlsZChzdHlsZSk7CgpsZXQgbWV0YVRhZyA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoIm1ldGEiKTsKbWV0YVRhZy5zZXRBdHRyaWJ1dGUoIm5hbWUiLCAidmlld3BvcnQiKTsKbWV0YVRhZy5zZXRBdHRyaWJ1dGUoImNvbnRlbnQiLCAid2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEuMCIpOwpkb2N1bWVudC5oZWFkLmFwcGVuZENoaWxkKG1ldGFUYWcpOw==</template></body></html>
