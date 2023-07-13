@@ -1,9 +1,14 @@
 
 const cheerio = require('cheerio');
 const fs = require('fs');
-const $ = cheerio.load(fs.readFileSync('input.html'));
 const spice = fs.readFileSync('spice.js').toString()
-$('body').append('<script>'+ spice +'</script>');
-fs.existsSync('output') && fs.rmdirSync('output', { recursive: true });
+const pickNMix = cheerio.load(fs.readFileSync('input.html'));
+const buildUI = cheerio.load(fs.readFileSync('build-ui.html'));
+
+pickNMix('body').append('<script>'+ spice +'</script>');
+buildUI('body').append('<template id="spice">' + btoa(spice) +'</script>');
+
+fs.existsSync('output') && fs.rmSync('output', { recursive: true });
 fs.mkdirSync('output');
-fs.writeFileSync('output/output.html', $.html());
+fs.writeFileSync('output/pick-n-mix.html', pickNMix.html());
+fs.writeFileSync('./index.html', buildUI.html());
