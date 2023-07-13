@@ -156,21 +156,23 @@ table {
   width: 90%;
 }
 
-h1,
-h2,
-h3,
+h1 {
+  background-color: #94a3b8;
+}
+h2 {
+  background-color: #cbd5e1;
+}
+h3 {
+  background-color: #e2e8f0;
+}
 h4 {
-  background-color: #eee;
+  background-color: #f1f5f9;
+}
+
+h1, h2, h3, h4 {
   cursor: pointer;
   border-radius: 8px;
   padding: 8px !important;
-}
-
-h1:hover,
-h2:hover,
-h3:hover,
-h4:hover {
-  background-color: #ddd;
 }
 `;
 document.head.appendChild(style);
