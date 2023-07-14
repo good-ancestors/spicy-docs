@@ -1,5 +1,5 @@
-node_modules
 .staticrypt.json
 .DS_Store
-input.html
-output
+node_modules
+output/
+src/input.html
