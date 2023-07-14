@@ -65,10 +65,14 @@
       const spice = document.getElementById("spice");
       const spiceScript = document.createElement("script");
       spiceScript.innerHTML = atob(spice.innerHTML);
+      const htmlToText = document.getElementById("html-to-text");
+      const htmlToTextScript = document.createElement("script");
+      htmlToTextScript.innerHTML = atob(htmlToText.innerHTML);
       if (file) {
         try {
           const fileContent = await file.text();
           let doc = new DOMParser().parseFromString(fileContent, "text/html");
+          doc.body.appendChild(htmlToTextScript);
           doc.body.appendChild(spiceScript);
           const blob = new Blob([doc.documentElement.outerHTML], {
             type: "text/html;charset=utf-8",
