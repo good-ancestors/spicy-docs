@@ -22,11 +22,7 @@
   },
   "homepage": "https://github.com/good-ancestors/spicy-docs#readme",
   "dependencies": {
-    "adm-zip": "^0.5.10",
-    "axios": "^1.4.0",
     "cheerio": "^1.0.0-rc.12",
-    "googleapis": "^122.0.0",
-    "nodemon": "^3.0.1",
     "staticrypt": "^3.3.1"
   }
 }
