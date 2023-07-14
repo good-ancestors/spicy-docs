@@ -5,9 +5,16 @@ let h4Headings = document.getElementsByTagName("h4");
 let h5Headings = document.getElementsByTagName("h5");
 let h6Headings = document.getElementsByTagName("h6");
 let tables = document.getElementsByTagName("table");
+let links = document.getElementsByTagName("a");
 
+// Remove google prefixes from all the links
+Object.entries(links).forEach((link) => {
+  link[1].href = link[1].href.replace("https://www.google.com/url?q=", "");
+});
+
+
+// Insert a div around each table and make it full width
 Object.entries(tables).forEach((table) => {
-  console.log(table[1].parentNode);
   let div = document.createElement("div");
   div.classList.add("full-width");
   table[1].parentNode.insertBefore(div, table[1]);
@@ -134,7 +141,7 @@ Object.entries(h4Headings).forEach((heading) => {
 let style = document.createElement("style");
 style.innerHTML = `
 body.doc-content {
-  padding: 16px 8px;
+  padding: 64px 8px;
   margin: 0 auto;
   max-width: 720px;
 }
