@@ -10,8 +10,17 @@ let links = document.getElementsByTagName("a");
 // Remove google prefixes from all the links
 Object.entries(links).forEach((link) => {
   link[1].href = link[1].href.replace("https://www.google.com/url?q=", "");
+  link[1].href = link[1].href.replace(/&sa=D.+/, "");
+  link[1].target = "_blank";
 });
 
+// Insert a div around each table and make it full width
+Object.entries(tables).forEach((table) => {
+  let div = document.createElement("div");
+  div.classList.add("full-width");
+  table[1].parentNode.insertBefore(div, table[1]);
+  div.appendChild(table[1]);
+});
 
 // Insert a div around each table and make it full width
 Object.entries(tables).forEach((table) => {
@@ -24,7 +33,6 @@ Object.entries(tables).forEach((table) => {
 // Hide all content below H1 headings
 Object.entries(h1Headings).forEach((heading) => {
   let nextSibling = document.getElementById(heading[1].id).nextElementSibling;
-  console.log(nextSibling);
   while (nextSibling && nextSibling.nodeName !== "H1") {
     nextSibling.style.display = "none";
     nextSibling = nextSibling.nextElementSibling;
