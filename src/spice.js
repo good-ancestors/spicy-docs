@@ -7,6 +7,44 @@ let h6Headings = document.getElementsByTagName("h6");
 let tables = document.getElementsByTagName("table");
 let links = document.getElementsByTagName("a");
 
+// Add GAP header
+let firstElement = document.getElementsByTagName("body")[0].firstChild;
+let secondElement = firstElement.nextSibling;
+
+let headerDiv = document.createElement("div");
+headerDiv.classList.add("full-width");
+headerDiv.classList.add("header");
+document.body.prepend(headerDiv);
+
+let img = document.createElement("img");
+img.src =
+  "https://images.squarespace-cdn.com/content/v1/6364a71770e4605f465b714e/9312ec3f-188a-4c91-b3f7-bb35790cbd41/The+Glyph+-+coloured+for+light+backgrounds.png?format=300w";
+img.style.width = "100px";
+img.style.height = "100px";
+img.style.position = "absolute";
+img.style.top = "0";
+img.style.left = "0";
+headerDiv.appendChild(img);
+headerDiv.appendChild(firstElement);
+headerDiv.appendChild(secondElement);
+
+// wrap main content in padded div
+let mainContentDiv = document.createElement("div");
+let mainContentElement = headerDiv.nextSibling;
+let mainContentElements = [mainContentElement];
+mainContentDiv.classList.add("main-content");
+headerDiv.parentNode.insertBefore(mainContentDiv, headerDiv.nextSibling);
+while (mainContentElement) {
+  if (mainContentElement.nodeName !== "SCRIPT") {
+    mainContentElements.push(mainContentElement);
+  }
+  console.log(mainContentElement)
+  mainContentElement = mainContentElement.nextSibling;
+}
+mainContentElements.forEach((element) => {
+  mainContentDiv.appendChild(element);
+});
+
 // Remove google prefixes from all the links
 Object.entries(links).forEach((link) => {
   link[1].href = link[1].href.replace("https://www.google.com/url?q=", "");
@@ -149,9 +187,29 @@ Object.entries(h4Headings).forEach((heading) => {
 let style = document.createElement("style");
 style.innerHTML = `
 body.doc-content {
-  padding: 64px 8px;
+  padding: 0 0 256px 0;
   margin: 0 auto;
   max-width: 720px;
+  width: 100%;
+}
+
+.main-content {
+  padding: 0 16px;
+}
+
+.header {
+  color: #fff;
+  padding: 32px;
+  height: 400px;
+  background-color: #253551;
+  display: flex;
+  margin-bottom: 64px;
+  flex-direction: column;
+  justify-content: end;
+}
+
+.header * {
+  color: #fff !important;
 }
 
 .full-width {
@@ -162,9 +220,7 @@ body.doc-content {
   margin-left: -50vw;
   margin-right: -50vw;
   overflow-x: scroll;
-  margin-bottom: 16px;
-  margin-top: 16px;
-
+  box-sizing: border-box;
 }
 
 table {
@@ -172,16 +228,16 @@ table {
 }
 
 h1 {
-  background-color: #9ca3af;
+  background-color: #a8a29e;
 }
 h2 {
-  background-color: #d1d5db;
+  background-color: #d6d3d1;
 }
 h3 {
-  background-color: #e5e7eb;
+  background-color: #e7e5e4;
 }
 h4 {
-  background-color: #f3f4f6;
+  background-color: #f5f5f4;
 }
 h1, h2, h3, h4 {
   cursor: pointer;
