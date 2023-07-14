@@ -157,18 +157,17 @@ table {
 }
 
 h1 {
-  background-color: #94a3b8;
+  background-color: #9ca3af;
 }
 h2 {
-  background-color: #cbd5e1;
+  background-color: #d1d5db;
 }
 h3 {
-  background-color: #e2e8f0;
+  background-color: #e5e7eb;
 }
 h4 {
-  background-color: #f1f5f9;
+  background-color: #f3f4f6;
 }
-
 h1, h2, h3, h4 {
   cursor: pointer;
   border-radius: 8px;
